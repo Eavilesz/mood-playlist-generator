@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Playlist } from '@/lib/definitions';
 
 const SPOTIFY_TOKEN_URL = 'https://accounts.spotify.com/api/token';
 
@@ -36,7 +37,18 @@ export const getPlaylistsByMood = async (mood, token) => {
       params: { q: mood, type: 'playlist', limit: 10 },
     });
 
-    return response.data.playlists.items;
+    const playlists = response.data.playlists.items;
+
+    const processedPlaylists = playlists.map((playlist) => {
+      if (playlist)
+        return {
+          name: playlist.name,
+          authorName: playlist.owner.display_name,
+          image: playlist.images[0]?.url,
+        };
+    });
+
+    return processedPlaylists;
   } catch (error) {
     console.error('Error fetching playlists:', error);
   }

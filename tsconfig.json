@@ -27,7 +27,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/services/spotify.js"
+    "src/app/services/spotify.ts"
   ],
   "exclude": ["node_modules"]
 }
