@@ -1,3 +1,5 @@
+import { Playlist } from '@/lib/definitions';
+
 import {
   Dialog,
   DialogContent,
@@ -39,12 +41,14 @@ interface PlaylistModalProps {
   mood: string | null;
   isOpen: boolean;
   onClose: () => void;
+  playlists: Playlist[];
 }
 
 export default function PlaylistModal({
   mood,
   isOpen,
   onClose,
+  playlists,
 }: PlaylistModalProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -54,7 +58,7 @@ export default function PlaylistModal({
       >
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-spotify-green">
-            {mood} Playlists
+            {mood?.toUpperCase()} Playlists
           </DialogTitle>
         </DialogHeader>
         <ScrollArea className="mt-4 max-h-[60vh]">
@@ -73,7 +77,7 @@ export default function PlaylistModal({
                     {playlist.name}
                   </h3>
                   <p className="text-sm text-spotify-white/70 group-hover:text-spotify-black/70">
-                    by {playlist.author}
+                    by {playlist.authorName}
                   </p>
                 </div>
               </div>

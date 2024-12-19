@@ -3,3 +3,9 @@ export type Playlist = {
   authorName: string;
   image: string;
 };
+
+export type PlayListResponse = {
+  name: string;
+  owner: { display_name: string };
+  images: [{ url: string }];
+};

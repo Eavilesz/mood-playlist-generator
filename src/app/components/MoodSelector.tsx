@@ -1,8 +1,8 @@
-'use client';
-
 import { Button } from '@/components/ui/button';
-import PlaylistModal from './PlaylistModal';
-import { usePathname, useSearchParams, useRouter } from 'next/navigation';
+
+import { Playlist } from '@/lib/definitions';
+import { getPlaylistsByMood } from '../actions/actions';
+import { Dispatch, SetStateAction } from 'react';
 
 const moods = [
   'Happy',
@@ -14,45 +14,26 @@ const moods = [
 ];
 
 interface MoodSelectorProps {
-  // selectedMood: string | null;
-  // setSelectedMood: (mood: string | null) => void;
+  setFetchedPlaylists: Dispatch<SetStateAction<Playlist[]>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  setMood: Dispatch<SetStateAction<string>>;
 }
 
-export default function MoodSelector({}: // selectedMood,
-// setSelectedMood,
-MoodSelectorProps) {
-  const searchParams = useSearchParams();
-  const pathName = usePathname();
-  const { replace } = useRouter();
+export default function MoodSelector({
+  setFetchedPlaylists,
+  setIsOpen,
+  setMood,
+}: MoodSelectorProps) {
+  const handleSelect = async (newMood: string) => {
+    const playlists = await getPlaylistsByMood(newMood);
 
-  const isRequested = searchParams.get('requested');
-  const previousMood = searchParams.get('mood');
-
-  const handleSelect = (newMood: string) => {
-    const params = new URLSearchParams(searchParams);
-
-    if (newMood) {
-      params.set('mood', newMood);
-      params.set('requested', 'true');
-    } else {
-      params.delete('mood');
-    }
-
-    replace(`${pathName}?${params.toString()}`);
-  };
-
-  const handleClose = () => {
-    const params = new URLSearchParams(searchParams);
-
-    params.delete('requested');
-    replace(`${pathName}?${params.toString()}`);
+    setFetchedPlaylists(playlists);
+    setMood(newMood);
+    setIsOpen(true);
   };
 
   return (
     <div className="space-y-4">
-      <h2 className="text-xl font-semibold text-spotify-white">
-        Quick mood selection:
-      </h2>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {moods.map((mood) => (
           <Button
@@ -65,13 +46,6 @@ MoodSelectorProps) {
           </Button>
         ))}
       </div>
-      {isRequested && (
-        <PlaylistModal
-          mood={previousMood}
-          isOpen={!!isRequested}
-          onClose={handleClose}
-        />
-      )}
     </div>
   );
 }

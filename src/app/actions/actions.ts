@@ -1,5 +1,7 @@
+'use server';
+
 import axios from 'axios';
-import { Playlist } from '@/lib/definitions';
+import { PlayListResponse } from '@/lib/definitions';
 
 const SPOTIFY_TOKEN_URL = 'https://accounts.spotify.com/api/token';
 
@@ -28,7 +30,8 @@ export const getSpotifyAccessToken = async () => {
   }
 };
 
-export const getPlaylistsByMood = async (mood, token) => {
+export const getPlaylistsByMood = async (mood: string) => {
+  const token = await getSpotifyAccessToken();
   const headers = { Authorization: `Bearer ${token}` };
 
   try {
@@ -39,7 +42,7 @@ export const getPlaylistsByMood = async (mood, token) => {
 
     const playlists = response.data.playlists.items;
 
-    const processedPlaylists = playlists.map((playlist) => {
+    const processedPlaylists = playlists.map((playlist: PlayListResponse) => {
       if (playlist)
         return {
           name: playlist.name,
