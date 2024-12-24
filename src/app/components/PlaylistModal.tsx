@@ -1,4 +1,5 @@
 import { Playlist } from '@/lib/definitions';
+import Link from 'next/link';
 
 import {
   Dialog,
@@ -10,7 +11,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
 interface PlaylistModalProps {
-  mood: string | null;
+  mood: string;
   isOpen: boolean;
   onClose: () => void;
   playlists: Playlist[];
@@ -30,13 +31,16 @@ export default function PlaylistModal({
       >
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-spotify-green">
-            {mood?.toUpperCase()} Playlists
+            {mood.toUpperCase()} Playlists
           </DialogTitle>
         </DialogHeader>
         <ScrollArea className="mt-4 max-h-[60vh]">
           <div className="space-y-4 pr-4">
             {playlists.map((playlist) => (
-              <div
+              <Link
+                target="_blank"
+                rel="noopener noreferrer"
+                href={playlist.externalURL}
                 key={`${playlist.name} from ${playlist.authorName}`}
                 className="flex items-center space-x-4 p-4 bg-spotify-gray rounded-lg hover:bg-spotify-green transition-colors duration-200 group cursor-pointer"
               >
@@ -52,7 +56,7 @@ export default function PlaylistModal({
                     by {playlist.authorName}
                   </p>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </ScrollArea>

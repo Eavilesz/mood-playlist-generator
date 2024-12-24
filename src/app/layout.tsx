@@ -3,8 +3,8 @@ import { Nunito } from 'next/font/google';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'AI Playlist Generator',
-  description: "Let's find the perfect playlist depending on your mood!",
+  title: 'SpotifAI',
+  description: "Let's find the perfect playlist for you!",
 };
 
 const nunito = Nunito({

@@ -48,6 +48,7 @@ export const getPlaylistsByMood = async (mood: string) => {
           name: playlist.name,
           authorName: playlist.owner.display_name,
           image: playlist.images[0]?.url,
+          externalURL: playlist.external_urls.spotify,
         };
     });
 
