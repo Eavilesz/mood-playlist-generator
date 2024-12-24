@@ -1,5 +1,5 @@
-import { AIIcon } from './components/AIIcon';
 import { MoodInputs } from './components/MoodInputs';
+import { BsStars } from 'react-icons/bs';
 
 export default async function Home() {
   return (
@@ -7,7 +7,7 @@ export default async function Home() {
       <div className="md:w-1/2">
         <h1 className=" flex text-4xl font-bold mb-8 justify-center text-spotify-green gap-1">
           SpotifAI
-          <AIIcon />
+          <BsStars />
         </h1>
         <MoodInputs />
       </div>
