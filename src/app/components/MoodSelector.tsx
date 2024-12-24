@@ -1,10 +1,6 @@
 import { Button } from '@/components/ui/button';
 
-import { Playlist } from '@/lib/definitions';
-import { getPlaylistsByMood } from '../actions/actions';
-import { Dispatch, SetStateAction } from 'react';
-
-const moods = [
+const moodOptions = [
   'Happy',
   'Relaxed',
   'Melancholic',
@@ -14,33 +10,19 @@ const moods = [
 ];
 
 interface MoodSelectorProps {
-  setFetchedPlaylists: Dispatch<SetStateAction<Playlist[]>>;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
-  setMood: Dispatch<SetStateAction<string>>;
+  handleMoodChange: (newMood: string) => void;
 }
 
-export default function MoodSelector({
-  setFetchedPlaylists,
-  setIsOpen,
-  setMood,
-}: MoodSelectorProps) {
-  const handleSelect = async (newMood: string) => {
-    const playlists = await getPlaylistsByMood(newMood);
-
-    setFetchedPlaylists(playlists);
-    setMood(newMood);
-    setIsOpen(true);
-  };
-
+export default function MoodSelector({ handleMoodChange }: MoodSelectorProps) {
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-        {moods.map((mood) => (
+        {moodOptions.map((mood) => (
           <Button
             key={mood}
             variant="outline"
             className="h-12 text-md font-bold bg-spotify-gray text-spotify-white border-spotify-green hover:bg-spotify-green hover:text-spotify-black transition-colors duration-200"
-            onClick={() => handleSelect(mood.toLowerCase())}
+            onClick={() => handleMoodChange(mood.toLowerCase())}
           >
             {mood}
           </Button>

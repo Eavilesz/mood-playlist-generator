@@ -1,36 +1,26 @@
 'use client';
 
-import { useState } from 'react';
-import { Playlist } from '@/lib/definitions';
+import { useMoods } from '@/lib/hooks';
 import AIInput from './AIInput';
 import MoodSelector from './MoodSelector';
 import PlaylistModal from './PlaylistModal';
 
 export const MoodInputs = () => {
-  const [fetchedPlaylists, setFetchedPlaylists] = useState<Playlist[]>([]);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [mood, setMood] = useState<string>('');
-
-  const handleClose = () => {
-    setIsOpen(false);
-  };
+  const { isOpen, setIsOpen, mood, fetchedPlaylists, handleMoodChange } =
+    useMoods();
 
   return (
-    <>
-      <AIInput />
-      <MoodSelector
-        setFetchedPlaylists={setFetchedPlaylists}
-        setIsOpen={setIsOpen}
-        setMood={setMood}
-      />
+    <div className="max-w-4xl mx-auto space-y-8">
+      <AIInput handleMoodChange={handleMoodChange} />
+      <MoodSelector handleMoodChange={handleMoodChange} />
       {isOpen && (
         <PlaylistModal
           mood={mood}
           isOpen={isOpen}
-          onClose={handleClose}
+          onClose={() => setIsOpen(false)}
           playlists={fetchedPlaylists}
         />
       )}
-    </>
+    </div>
   );
 };

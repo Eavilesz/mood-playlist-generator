@@ -1,7 +1,5 @@
-import { AiIcon } from './components/AiIcon';
+import { AIIcon } from './components/AIIcon';
 import { MoodInputs } from './components/MoodInputs';
-import MoodSelector from './components/MoodSelector';
-import AIInput from './components/AIInput';
 
 export default async function Home() {
   return (
@@ -9,11 +7,9 @@ export default async function Home() {
       <div className="md:w-1/2">
         <h1 className=" flex text-4xl font-bold mb-8 justify-center text-spotify-green gap-1">
           AI Playlist Generator
-          <AiIcon />
+          <AIIcon />
         </h1>
-        <div className="max-w-4xl mx-auto space-y-8">
-          <MoodInputs />
-        </div>
+        <MoodInputs />
       </div>
     </main>
   );

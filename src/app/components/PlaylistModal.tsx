@@ -9,34 +9,6 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
-const playlists = [
-  {
-    name: 'Summer Vibes',
-    author: 'DJ Sunshine',
-    image: '/placeholder.svg?height=40&width=40',
-  },
-  {
-    name: 'Chill Lounge',
-    author: 'Mellow Beats',
-    image: '/placeholder.svg?height=40&width=40',
-  },
-  {
-    name: 'Workout Pump',
-    author: 'Fitness Guru',
-    image: '/placeholder.svg?height=40&width=40',
-  },
-  {
-    name: 'Late Night Jazz',
-    author: 'Smooth Sax',
-    image: '/placeholder.svg?height=40&width=40',
-  },
-  {
-    name: 'Morning Motivation',
-    author: 'Rise & Shine',
-    image: '/placeholder.svg?height=40&width=40',
-  },
-];
-
 interface PlaylistModalProps {
   mood: string | null;
   isOpen: boolean;
@@ -65,7 +37,7 @@ export default function PlaylistModal({
           <div className="space-y-4 pr-4">
             {playlists.map((playlist) => (
               <div
-                key={playlist.name}
+                key={`${playlist.name} from ${playlist.authorName}`}
                 className="flex items-center space-x-4 p-4 bg-spotify-gray rounded-lg hover:bg-spotify-green transition-colors duration-200 group cursor-pointer"
               >
                 <Avatar className="h-16 w-16">

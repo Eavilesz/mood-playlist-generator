@@ -1,31 +1,35 @@
-'use client';
+import {
+  Dispatch,
+  SetStateAction,
+  SyntheticEvent,
+  useEffect,
+  useState,
+} from 'react';
+
+import { getMoodFromCohere } from '@/lib/cohere';
 
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { FaArrowUp } from 'react-icons/fa';
 
-import { useSearchParams, useRouter, usePathname } from 'next/navigation';
-import { SyntheticEvent } from 'react';
+interface AIInputProps {
+  handleMoodChange: (newMood: string) => void;
+}
 
-export default function AIInput() {
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const { replace } = useRouter();
+export default function AIInput({ handleMoodChange }: AIInputProps) {
+  const [userPrompt, setUserPrompt] = useState<string>('');
 
   const handleInput = (term: string) => {
-    const params = new URLSearchParams(searchParams);
-
-    if (term) {
-      params.set('mood', term);
-    } else {
-      params.delete('mood');
-    }
-
-    replace(`${pathname}?${params.toString()}`);
+    setUserPrompt(term);
   };
 
-  const handleSubmit = (e: SyntheticEvent) => {
+  const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
+
+    if (userPrompt.trim().length < 1) return;
+
+    const mood = await getMoodFromCohere(userPrompt);
+    handleMoodChange(mood);
   };
 
   return (
@@ -36,7 +40,7 @@ export default function AIInput() {
       <div className="relative">
         <form onSubmit={handleSubmit}>
           <Input
-            defaultValue={searchParams.get('mood')?.toString()}
+            value={userPrompt}
             onChange={(e) => handleInput(e.target.value)}
             placeholder="E.g., 'Feeling like I'm on top of the world'"
             className="h-16 w-full pr-12 text-lg bg-spotify-gray text-spotify-white placeholder-spotify-white/50 border-spotify-green focus:border-spotify-green focus:ring-spotify-green"

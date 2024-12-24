@@ -1,4 +1,4 @@
-export const AiIcon = () => {
+export const AIIcon = () => {
   return (
     <svg
       fill="#1DB954"
