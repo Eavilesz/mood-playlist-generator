@@ -49,8 +49,8 @@ export default function AIInput({ handleMoodChange }: AIInputProps) {
         </form>
       </div>
       <div className="text-sm text-spotify-gray">
-        Try: "Excited for a night out" • "Calm and introspective" • "Ready to
-        conquer the world"
+        {`Try: "Excited for a night out" • "Calm and introspective" • "Ready to
+        conquer the world"`}
       </div>
     </div>
   );
